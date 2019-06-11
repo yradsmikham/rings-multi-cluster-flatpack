@@ -1,0 +1,62 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: rings.rings.microsoft.com
+spec:
+  group: rings.microsoft.com
+  names:
+    kind: Ring
+    listKind: RingList
+    plural: rings
+    singular: ring
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          type: object
+          required:
+            - deploy
+            - claim
+            - entryPoints
+            - match
+            - selector
+          properties:
+            deploy:
+              type: boolean
+              description: 'Deploy will inform the CI/CD system whether or not to deploy the codebase to a live environment'
+            claim:
+              type: string
+              description: 'Claim will be used to route user traffic to different instances of deployments'
+            entryPoints:
+              type: array
+              description: 'Entrypoints inform which types of traffic will be received (eg: http, https, internal)'
+              items:
+                type: string
+            match:
+              type: string
+              description: 'Match is the routing rule to be used for this route (eg: PathPrefix(`/query/v1`)'
+            selector:
+              type: object
+              description: 'Selector is used for targetting a certain deployment'
+        status:
+          type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true

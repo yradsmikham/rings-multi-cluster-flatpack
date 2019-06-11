@@ -1,0 +1,21 @@
+name: hello-rings
+type: component
+subcomponents:
+- name: hello-rings-featureA
+  type: helm
+  source: https://github.com/bnookala/hello-rings
+  method: git
+  path: chart
+  branch: featureA
+- name: hello-rings-featureB
+  type: helm
+  source: https://github.com/bnookala/hello-rings
+  method: git
+  path: chart
+  branch: featureB
+- name: hello-rings-master
+  type: helm
+  source: https://github.com/bnookala/hello-rings
+  method: git
+  path: chart
+  branch: master
